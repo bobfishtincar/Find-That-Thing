@@ -45,24 +45,51 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="starter" ng-controller="loginCtrl">
-      <ion-pane>
+  <body ng-app="starter">
+      <ion-pane ng-controller="AppCtrl">
         <ion-header-bar class="bar-stable">
-          <h1 class="title">Login</h1>
+          <h1 class="title">FindStuff</h1>
         </ion-header-bar>
         <ion-content class="padding">
+          <!-- <div class="list list-inset">
+            <label class="item item-input">
+              <i class="icon ion-speakerphone placeholder-icon"></i>
+              <input type="text" placeholder="Let me speak..." ng-model="data.speechText">
+            </label>
+          </div>
+          <button class="button button-full button-positive" ng-click="speakText()">
+            Speak!
+          </button>
 
-          <label class="item item-input item-floating-label">
-            <span class="input-label">Email</span>
-            <input type="email" placeholder="Email" ng-model="input.email">
-          </label>
+          <button class="button button-full button-positive"ng-click="record()">
+            Record
+          </button>
+          <div class="card">
+            <div class="item item-text-wrap">
+              {{recognizedText}}
+            </div>
+          </div> -->
 
-          <label class="item item-input item-floating-label">
-            <span class="input-label">Password</span>
-            <input type="password" placeholder="Password" ng-model="input.password">
-          </label>
+          <div class="list list-inset">
+            <button class="button button-block item-text-wrap" ng-click="storeItemName()">Say Item Name</button>
+            <ion-item class="item-text-wrap">
+              {{itemname}}
+            </ion-item>
 
-          <button class="button button-block" ng-click="login(input)">Login / Create User</button>
+            <button class="button button-block item-text-wrap" ng-click="storeItemLocation()">Say Item Location</button>
+            <ion-item class="item-text-wrap">
+              {{itemlocation}}
+            </ion-item>
+
+            <button class="button button-block item-text-wrap" ng-click="storeItem()">Store Item</button>
+          </div>
+
+          <div class="list list-inset">
+            <button class="button button-block item-text-wrap" ng-click="searchItem()">Search For Item</button>
+            <ion-item class="item-text-wrap">
+              {{searcheditem}}
+            </ion-item>
+          </div>
 
         </ion-content>
       </ion-pane>
