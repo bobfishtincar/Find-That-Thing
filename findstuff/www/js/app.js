@@ -1,5 +1,9 @@
 angular.module('starter', ['ionic'])
 
+.config(function($ionicConfigProvider) {
+  $ionicConfigProvider.navBar.alignTitle('center');
+})
+
 .controller('AppCtrl', function($scope, $ionicPopup, $ionicModal) {
   // $scope.data = {
   //   speechText: ''
@@ -52,8 +56,9 @@ angular.module('starter', ['ionic'])
         i++;
       });
       $scope.group = group;
-      $scope.modal.show();
+      $scope.$apply();
     });
+    $scope.modal.show();
   };
   $scope.closeModal = function() {
     $scope.modal.hide();
@@ -111,7 +116,7 @@ angular.module('starter', ['ionic'])
                       TTS.speak({
                                text: snapshot.val(),
                                locale: 'en-GB',
-                               rate: 1.5
+                               rate: 1.0
                            }, function () {
                                // Do Something after success
                            }, function (reason) {
@@ -125,7 +130,7 @@ angular.module('starter', ['ionic'])
                       TTS.speak({
                                text: 'Could not find item.',
                                locale: 'en-GB',
-                               rate: 1.5
+                               rate: 1.0
                            }, function () {
                                // Do Something after success
                            }, function (reason) {
@@ -144,6 +149,14 @@ angular.module('starter', ['ionic'])
           }
       };
       recognition.start();
+  };
+
+  $scope.logout = function() {
+    firebase.auth().signOut().then(function() {
+      window.location = "index.html";
+    }, function(error) {
+      // console.error('Sign Out Error', error);
+    });
   };
 })
 

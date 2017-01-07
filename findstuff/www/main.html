@@ -49,6 +49,9 @@
       <ion-pane ng-controller="AppCtrl">
         <ion-header-bar class="bar-stable">
           <h1 class="title">FindStuff</h1>
+          <div class="buttons">
+            <button class="button button-outline button-positive" ng-click="logout()">Log Out</button>
+          </div>
         </ion-header-bar>
         <ion-content class="padding">
           <!-- <div class="list list-inset">
@@ -70,30 +73,35 @@
             </div>
           </div> -->
 
-          <div class="list list-inset">
-            <button class="button button-block item-text-wrap" ng-click="storeItemName()">Say Item Name</button>
-            <ion-item class="item-text-wrap">
+          <ion-item class="bar bar-header bar-positive">
+            <h1 class="title">Store Items</h1>
+          </ion-item>
+
+          <ion-item class="item-text-wrap">
+            <button class="button button-positive button-outline button-block" ng-click="storeItemName()">Speak Item Name</button>
+            <ion-item>
               {{itemname}}
             </ion-item>
 
-            <button class="button button-block item-text-wrap" ng-click="storeItemLocation()">Say Item Location</button>
-            <ion-item class="item-text-wrap">
+            <button class="button button-positive button-outline button-block" ng-click="storeItemLocation()">Speak Item Location</button>
+            <ion-item>
               {{itemlocation}}
             </ion-item>
 
-            <button class="button button-block item-text-wrap" ng-click="storeItem()">Store Item</button>
-          </div>
+            <button class="button button-positive button-outline button-block" ng-click="storeItem()">Store Item</button>
+          </ion-item>
 
-          <div class="list list-inset">
-            <button class="button button-block item-text-wrap" ng-click="searchItem()">Search For Item</button>
-            <ion-item class="item-text-wrap">
+          <ion-item class="bar bar-header bar-positive">
+            <h1 class="title">Search Items</h1>
+          </ion-item>
+
+          <ion-item class="item-text-wrap">
+            <button class="button button-positive button-outline button-block" ng-click="searchItem()">Search For Item</button>
+            <!-- <ion-item>
               {{searcheditem}}
-            </ion-item>
-          </div>
-
-          <div class="list list-inset">
-            <button class="button button-block item-text-wrap" ng-click="openModal()">View Item List</button>
-          </div>
+            </ion-item> -->
+            <button class="button button-block button-outline button-positive" ng-click="openModal()">View Item List</button>
+          </ion-item>
 
         </ion-content>
       </ion-pane>
