@@ -1,1 +1,11 @@
 /* Empty. Add your own CSS if you like */
+
+.custom-icon {
+  color : blue;
+}
+
+.button-right{
+  display: block !important;
+  width: 100% !important;
+  text-align:right !important;
+}

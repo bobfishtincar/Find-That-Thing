@@ -8,7 +8,7 @@
     <ion-content>
       <div class="card" ng-repeat="item in group">
         <div class="item item-divider item-text-wrap">
-          <h2>{{item.name}}</h2>
+          <h2><span on-tap="delete(item.name)"><i class="icon ion-close"></i></span>&nbsp;&nbsp;&nbsp;{{item.name}}</h2>
         </div>
         <div class="item item-text-wrap">
           <h3>{{item.location}}</h3>

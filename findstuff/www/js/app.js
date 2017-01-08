@@ -68,11 +68,19 @@ angular.module('starter', ['ionic'])
     $scope.modal.remove();
   });
 
+  $scope.textmode = function() {
+    window.location = "text.html";
+  };
+
+  $scope.delete = function(name) {
+    firebase.database().ref(firebase.auth().currentUser.uid + '/' + name).remove();
+  };
+
   $scope.storeItemName = function() {
     var recognition = new SpeechRecognition();
       recognition.onresult = function(event) {
           if (event.results.length > 0) {
-              $scope.itemname = event.results[0][0].transcript;
+              $scope.itemname = event.results[0][0].transcript.toLowerCase();
               $scope.$apply();
           }
       };
@@ -83,7 +91,7 @@ angular.module('starter', ['ionic'])
     var recognition = new SpeechRecognition();
       recognition.onresult = function(event) {
           if (event.results.length > 0) {
-              $scope.itemlocation = event.results[0][0].transcript;
+              $scope.itemlocation = event.results[0][0].transcript.toLowerCase();
               $scope.$apply();
           }
       };
@@ -108,7 +116,7 @@ angular.module('starter', ['ionic'])
     var recognition = new SpeechRecognition();
       recognition.onresult = function(event) {
           if (event.results.length > 0) {
-              $scope.searcheditem = event.results[0][0].transcript;
+              $scope.searcheditem = event.results[0][0].transcript.toLowerCase();
               $scope.$apply();
               firebase.database().ref(firebase.auth().currentUser.uid + '/' + $scope.searcheditem).on('value', function(snapshot) {
                   if (trigger) {
@@ -212,5 +220,143 @@ angular.module('starter', ['ionic'])
         }
       });
     }
+  };
+})
+
+.controller('TextCtrl', function($scope, $ionicPopup, $ionicModal) {
+  // $scope.data = {
+  //   speechText: ''
+  // };
+  // $scope.recognizedText = '';
+  //
+  // $scope.speakText = function() {
+  //   TTS.speak({
+  //          text: $scope.data.speechText,
+  //          locale: 'en-GB',
+  //          rate: 1.5
+  //      }, function () {
+  //          // Do Something after success
+  //      }, function (reason) {
+  //          // Handle the error case
+  //      });
+  // };
+  //
+  // $scope.record = function() {
+  //   var recognition = new SpeechRecognition();
+  //   recognition.onresult = function(event) {
+  //       if (event.results.length > 0) {
+  //           $scope.recognizedText = event.results[0][0].transcript;
+  //           $scope.$apply();
+  //       }
+  //   };
+  //   recognition.start();
+  // };
+
+  $scope.item = {};
+  $scope.search = {};
+  var trigger = false;
+
+  $ionicModal.fromTemplateUrl('modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    firebase.database().ref(firebase.auth().currentUser.uid).on('value', function(snapshot) {
+      var group = {};
+      var i = 0;
+      snapshot.forEach(function(childSnapshot) {
+        var temp = {};
+        temp.name = childSnapshot.key;
+        temp.location = childSnapshot.val();
+        group[i] = temp;
+        i++;
+      });
+      $scope.group = group;
+      $scope.$apply();
+    });
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+
+  $scope.speechmode = function() {
+    window.location = "main.html";
+  };
+
+  $scope.delete = function(name) {
+    firebase.database().ref(firebase.auth().currentUser.uid + '/' + name).remove();
+  };
+
+  $scope.storeItem = function(item) {
+    $scope.itemname = item.itemname.toLowerCase();
+    $scope.itemlocation = item.itemlocation.toLowerCase();
+    firebase.database().ref(firebase.auth().currentUser.uid + '/' + $scope.itemname).set($scope.itemlocation)
+    .then(function() {
+      $ionicPopup.alert({
+        title: "Success",
+        template: "Item Stored"
+      });
+      $scope.itemname = '';
+      $scope.itemlocation = '';
+      $scope.item = {};
+      $scope.$apply();
+    });
+  };
+
+  $scope.searchItem = function(search) {
+    $scope.searcheditem = search.searcheditem.toLowerCase();
+    trigger = true;
+    firebase.database().ref(firebase.auth().currentUser.uid + '/' + $scope.searcheditem).on('value', function(snapshot) {
+        if (trigger) {
+          if (snapshot.val()) {
+            TTS.speak({
+                     text: snapshot.val(),
+                     locale: 'en-GB',
+                     rate: 1.0
+                 }, function () {
+                     // Do Something after success
+                 }, function (reason) {
+                     // Handle the error case
+                 });
+            $ionicPopup.alert({
+              title: $scope.searcheditem,
+              template: snapshot.val()
+            });
+          } else {
+            TTS.speak({
+                     text: 'Could not find item.',
+                     locale: 'en-GB',
+                     rate: 1.0
+                 }, function () {
+                     // Do Something after success
+                 }, function (reason) {
+                     // Handle the error case
+                 });
+            $ionicPopup.alert({
+              title: $scope.searcheditem,
+              template: 'Could not find item.'
+            });
+          }
+          $scope.search = {};
+          $scope.searcheditem = '';
+          $scope.$apply();
+          trigger = false;
+        }
+    });
+  };
+
+  $scope.logout = function() {
+    firebase.auth().signOut().then(function() {
+      window.location = "index.html";
+    }, function(error) {
+      // console.error('Sign Out Error', error);
+    });
   };
 });
