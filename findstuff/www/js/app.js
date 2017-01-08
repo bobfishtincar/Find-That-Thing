@@ -1,27 +1,35 @@
+// function getRandomInt(min, max) {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min)) + min;
+// }
+
+ // && (getRandomInt(0, 5) === 0)
+
 angular.module('starter', ['ionic'])
 
 .run(function($ionicPlatform, $ionicPopup) {
     $ionicPlatform.ready(function() {
         if(window.plugins && window.plugins.AdMob) {
-            var admob_key = device.platform == "Android" ? "ca-app-pub-5667457276942129/3659768522" : "ca-app-pub-5667457276942129/9427100524";
-            var admob = window.plugins.AdMob;
-            admob.createBannerView(
-                {
-                    'publisherId': admob_key,
-                    'adSize': admob.AD_SIZE.BANNER,
-                    'bannerAtTop': false
-                },
-                function() {
-                    admob.requestAd(
-                        { 'isTesting': true },
-                        function() {
-                            admob.showAd(true);
-                        },
-                        function() { console.log('failed to request ad'); }
-                    );
-                },
+          var admob_key = device.platform == "Android" ? "ca-app-pub-5667457276942129/3659768522" : "ca-app-pub-5667457276942129/9427100524";
+          var admob = window.plugins.AdMob;
+          admob.createBannerView(
+              {
+                  'publisherId': admob_key,
+                  'adSize': admob.AD_SIZE.BANNER,
+                  'bannerAtTop': false
+              },
+              function() {
+                      admob.requestAd(
+                          { 'isTesting': true },
+                          function() {
+                              admob.showAd(true);
+                          },
+                          function() { console.log('failed to request ad'); }
+                      );
+                  },
                 function() { console.log('failed to create banner view'); }
-            );
+          );
         }
     });
 })
