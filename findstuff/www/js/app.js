@@ -21,7 +21,7 @@ angular.module('starter', ['ionic'])
               },
               function() {
                       admob.requestAd(
-                          { 'isTesting': true },
+                          { 'isTesting': false },
                           function() {
                               admob.showAd(true);
                           },
@@ -157,7 +157,7 @@ angular.module('starter', ['ionic'])
                     if (snapshot.val()) {
                       TTS.speak({
                                text: snapshot.val(),
-                               locale: 'en-GB',
+                               locale: 'en-US',
                                rate: 1.0
                            }, function () {
                                // Do Something after success
@@ -171,7 +171,7 @@ angular.module('starter', ['ionic'])
                     } else {
                       TTS.speak({
                                text: 'Could not find item.',
-                               locale: 'en-GB',
+                               locale: 'en-US',
                                rate: 1.0
                            }, function () {
                                // Do Something after success
@@ -352,7 +352,7 @@ angular.module('starter', ['ionic'])
           if (snapshot.val()) {
             TTS.speak({
                      text: snapshot.val(),
-                     locale: 'en-GB',
+                     locale: 'en-US',
                      rate: 1.0
                  }, function () {
                      // Do Something after success
@@ -366,7 +366,7 @@ angular.module('starter', ['ionic'])
           } else {
             TTS.speak({
                      text: 'Could not find item.',
-                     locale: 'en-GB',
+                     locale: 'en-US',
                      rate: 1.0
                  }, function () {
                      // Do Something after success
