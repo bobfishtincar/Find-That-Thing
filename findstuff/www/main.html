@@ -48,7 +48,7 @@
   <body ng-app="starter">
       <ion-pane ng-controller="AppCtrl">
         <ion-header-bar class="bar-stable">
-          <div class="buttons">
+          <div class="buttons" ng-if="disp.lay">
             <button class="button button-balanced" ng-click="textmode()">Text</button>
           </div>
           <h1 class="title">FindThatThing</h1>

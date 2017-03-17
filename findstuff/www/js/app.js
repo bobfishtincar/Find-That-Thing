@@ -9,29 +9,29 @@
 angular.module('starter', ['ionic'])
 
 .run(function($ionicPlatform, $ionicPopup) {
-    // $ionicPlatform.ready(function() {
-    //     if(window.plugins && window.plugins.AdMob) {
-    //       var admob_key = device.platform == "Android" ? "ca-app-pub-5667457276942129/3659768522" : "ca-app-pub-5667457276942129/9427100524";
-    //       var admob = window.plugins.AdMob;
-    //       admob.createBannerView(
-    //           {
-    //               'publisherId': admob_key,
-    //               'adSize': admob.AD_SIZE.BANNER,
-    //               'bannerAtTop': false
-    //           },
-    //           function() {
-    //                   admob.requestAd(
-    //                       { 'isTesting': false },
-    //                       function() {
-    //                           admob.showAd(true);
-    //                       },
-    //                       function() { console.log('failed to request ad'); }
-    //                   );
-    //               },
-    //             function() { console.log('failed to create banner view'); }
-    //       );
-    //     }
-    // });
+    $ionicPlatform.ready(function() {
+        if(window.plugins && window.plugins.AdMob) {
+          var admob_key = device.platform == "Android" ? "ca-app-pub-5667457276942129/3659768522" : "ca-app-pub-5667457276942129/9427100524";
+          var admob = window.plugins.AdMob;
+          admob.createBannerView(
+              {
+                  'publisherId': admob_key,
+                  'adSize': admob.AD_SIZE.BANNER,
+                  'bannerAtTop': false
+              },
+              function() {
+                      admob.requestAd(
+                          { 'isTesting': false },
+                          function() {
+                              admob.showAd(true);
+                          },
+                          function() { console.log('failed to request ad'); }
+                      );
+                  },
+                function() { console.log('failed to create banner view'); }
+          );
+        }
+    });
 })
 
 .config(function($ionicConfigProvider) {
@@ -39,6 +39,13 @@ angular.module('starter', ['ionic'])
 })
 
 .controller('AppCtrl', function($scope, $ionicPopup, $ionicModal) {
+
+  $scope.disp = {};
+  $scope.disp.lay = false;
+  setTimeout(function() {
+    $scope.disp.lay = true;
+    $scope.$apply();
+  }, 500);
   // $scope.data = {
   //   speechText: ''
   // };
@@ -158,7 +165,7 @@ angular.module('starter', ['ionic'])
                       TTS.speak({
                                text: snapshot.val(),
                                locale: 'en-US',
-                               rate: 1.0
+                               rate: 1.5
                            }, function () {
                                // Do Something after success
                            }, function (reason) {
@@ -172,7 +179,7 @@ angular.module('starter', ['ionic'])
                       TTS.speak({
                                text: 'Could not find item.',
                                locale: 'en-US',
-                               rate: 1.0
+                               rate: 1.5
                            }, function () {
                                // Do Something after success
                            }, function (reason) {
@@ -258,6 +265,14 @@ angular.module('starter', ['ionic'])
 })
 
 .controller('TextCtrl', function($scope, $ionicPopup, $ionicModal) {
+
+  $scope.disp = {};
+  $scope.disp.lay = false;
+  setTimeout(function() {
+    $scope.disp.lay = true;
+    $scope.$apply();
+  }, 500);
+
   // $scope.data = {
   //   speechText: ''
   // };
@@ -353,7 +368,7 @@ angular.module('starter', ['ionic'])
             TTS.speak({
                      text: snapshot.val(),
                      locale: 'en-US',
-                     rate: 1.0
+                     rate: 1.5
                  }, function () {
                      // Do Something after success
                  }, function (reason) {
@@ -367,7 +382,7 @@ angular.module('starter', ['ionic'])
             TTS.speak({
                      text: 'Could not find item.',
                      locale: 'en-US',
-                     rate: 1.0
+                     rate: 1.5
                  }, function () {
                      // Do Something after success
                  }, function (reason) {
